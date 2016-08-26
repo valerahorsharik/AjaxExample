@@ -1,16 +1,11 @@
-<?php $b= ["name" => 'vasya'];
-$c=json_encode($b);
-var_dump($c);
-?>
-
 <html>
     <head>
         <meta charset="utf-8">  
     </head>
     <body>
         <form id="hello" >
-            <input type="text" name="name"><br/><br/>
-            <input type="text" name="surname"><br/><br/>
+            <input type="text" id="name" name="name"><br/><br/>
+            <input type="text" id="surname" name="surname"><br/><br/>
             <button type="submit" >Отправить</button>
         </form>
         <div id="results"></div>

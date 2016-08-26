@@ -1,7 +1,6 @@
 <?php
 
-$a[0]=$_POST['name'];
-$a[1]=$_POST['surname'];
-$b = json_encode($a);
-echo $b;
+$b['name']=$_POST['name'];
+$b['surname']=$_POST['surname'];
+echo json_encode($b);   
 

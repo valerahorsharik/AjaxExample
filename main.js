@@ -1,13 +1,23 @@
 $('#hello').submit(function () {
-    var result = $(this).serialize();
+    var FormData = {
+        "name":$('#name').val(),
+        "surname":$('#surname').val()
+    };
+    
     $.ajax({
         type: "POST",
         url: 'hello.php',
-        data: result,
-        success: function (html) {
-            console.log(html);
+        data: {
+        name:$('#name').val(),
+        surname:$('#surname').val()
+    },
+        success: function (data) {
+            data = JSON.parse(data);
+            for(var i in data){
+                $('#results').append(data[i]);
+            }
         }
     });
-    alert(result);
+    console.log(FormData);
     return false;
 });
