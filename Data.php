@@ -1,6 +1,7 @@
 <?php
-
-$b['name']=$_POST['name'];
-$b['surname']=$_POST['surname'];
-echo json_encode($b);   
+$country=["Ru","Ua","Us","Fr"];
+if (isset($_POST['select']) && $_POST['select']=="country"){
+   echo json_encode($country);
+}
+//$city = ["Moskow","kiev","washington"];
 
