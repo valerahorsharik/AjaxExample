@@ -1,5 +1,25 @@
 <?php
-
+$host = "localhost";
+$dbname = "ajax_test";
+$user = "root";
+$pass = "";
+$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+ $query_result = $db->query('SELECT cc_desks.* '
+                . 'FROM cc_desks'
+                . 'LEFT JOIN cc_callcenters'
+                . 'ON cc_desks.id_callcenter = cc_callcenters.id'
+                . 'WHERE cc_callcenters.id = "1" ');
+        var_dump($query_result);
+ if($query_result){
+        foreach ($query_result->fetchAll() as $row_number => $row) {
+            $results[] = $row['name'];
+        }
+        
+        $db = NULL;
+        echo json_encode($results);
+ } else {
+     echo "U LOSE";
+ }
 ?>
 <html>
     <head>
@@ -7,23 +27,28 @@
     </head>
     <body>
         <div id="list">
-            <div class="options">Country:
-                <select id="country"> 
+            <div class="options">Call center:
+                <select id="cc_callcenters"> 
                     <option>Please select...</option>
                 </select>
             </div>
-            <div class="options">City:
-                <select id="city">
+            <div class="options">Desk:
+                <select id="cc_desks">
                     <option>Please select...</option>
                 </select>
             </div>
-            <div class="options">Street:
-                <select id="street">
+            <div class="options">Team:
+                <select id="cc_teams">
                     <option>Please select...</option>
                 </select>
             </div>
-            <div class="options">House: 
-                <select id="house">
+            <div class="options">Sales: 
+                <select id="cc_users">
+                    <option>Please select...</option>
+                </select>
+            </div>
+            <div class="options">Lead status: 
+                <select id="salestatus">
                     <option>Please select...</option>
                 </select>
             </div>
