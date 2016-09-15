@@ -2,25 +2,29 @@ $(document).ready(function () {
     $.ajax({
         type: "POST",
         url: 'data.php',
-        data: {"changed": "country",
-            "download": "country"},
+        data: {"changed": "cc_callcenters",
+            "download": "cc_callcenters"},
         success: function (data) {
             data = JSON.parse(data);
             for (var i in data) {
-                $('#country').append("<option value=\"" + i + "\">" + data[i] + "</option>\n");
+                $('#cc_callcenters').append("<option value=\"" + i + "\">" + data[i] + "</option>\n");
             }
         }
     });
 
 });
 $('#list select').on('change', function () {
-    var changed = $(this).attr('id');
+    var changed = {};
+    changed.id = $(this).attr('id');
+    changed.value = $("#"+changed.id + " option:selected").html();
+    //console.log(changed.value);
     var download = $('#list .options select#' + changed).closest('.options').next().find('select').attr('id');
     if (download) {
         $.ajax({
             type: "POST",
             url: 'data.php',
-            data: {"changed": changed,
+            data: {"changed": changed.id,
+                "changed_value":changed.value,
                 "download": download},
             success: function (data) {
                 console.log(download + " = " + data);
