@@ -4,22 +4,31 @@ $dbname = "ajax_test";
 $user = "root";
 $pass = "";
 $db = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
- $query_result = $db->query('SELECT cc_desks.* '
-                . 'FROM cc_desks'
-                . 'LEFT JOIN cc_callcenters'
-                . 'ON cc_desks.id_callcenter = cc_callcenters.id'
-                . 'WHERE cc_callcenters.id = "1" ');
-        var_dump($query_result);
- if($query_result){
-        foreach ($query_result->fetchAll() as $row_number => $row) {
-            $results[] = $row['name'];
-        }
-        
-        $db = NULL;
-        echo json_encode($results);
- } else {
-     echo "U LOSE";
- }
+if ($db) {
+    echo "all is ok";
+}
+$query_result = $db->query('SELECT cc_desks.* '
+        . 'FROM cc_desks '
+        . 'LEFT JOIN cc_callcenters '
+        . 'ON cc_desks.id_callcenter = cc_callcenters.id '
+        . 'WHERE cc_callcenters.id = 1');
+var_dump($query_result);
+if ($query_result) {
+    $results = array();
+    foreach ($query_result->fetchAll() as $row_number => $row) {
+        var_dump($row_number);
+        echo "<br/>";
+         var_dump($row);
+         echo "<hr/>";
+       // $results[] = $row['name'];
+    }
+
+    $db = NULL;
+    echo json_encode($results);
+} else {
+    echo "\nPDO::errorInfo():\n";
+    print_r($db->errorInfo());
+}
 ?>
 <html>
     <head>
