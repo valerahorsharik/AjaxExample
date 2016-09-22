@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    //get all callcenters
     $.ajax({
         type: "POST",
         url: 'data.php',
@@ -13,51 +14,41 @@ $(document).ready(function () {
     });
 
 });
+    //get list of options depends on changed value
 $('#list select').on('change', function () {
     var changed = {};
     changed.id = $(this).attr('id');
-    changed.value = $("#"+changed.id + " option:selected").html();
-    //console.log(changed.value);
-    var download = $('#list .options select#' + changed).closest('.options').next().find('select').attr('id');
+    changed.value = $("#" + changed.id + " option:selected").html();
+    var download = $('#list .options select#' + changed.id).closest('.options').next().find('select').attr('id');//не нравится это, хочу переделать через data-type
     if (download) {
         $.ajax({
             type: "POST",
             url: 'data.php',
             data: {"changed": changed.id,
-                "changed_value":changed.value,
+                "changed_value": changed.value,
                 "download": download},
             success: function (data) {
-                console.log(download + " = " + data);
-                $("#" + download + " option").remove();
+                 $("#" + download + " option").remove();
                 data = JSON.parse(data);
+                $("#" + download).append("<option >Please select..</option>\n");
                 for (var i in data) {
-                    $("#" + download).append("<option value=\""+i+"\">" + data[i] + "</option>\n");
+                    $("#" + download).append("<option value=\"" + i + "\">" + data[i] + "</option>\n");
                 }
             }
         });
     }
 
 });
-//$('#hello').on('submit',function () {
-//    var FormData = {
-//        "name":$('#name').val(),
-//        "surname":$('#surname').val()
-//    };
-//    
-//    $.ajax({
-//        type: "POST",
-//        url: 'hello.php',
-//        data: {
-//        name:$('#name').val(),
-//        surname:$('#surname').val()
-//    },
-//        success: function (data) {
-//            data = JSON.parse(data);
-//            for(var i in data){
-//                $('#results').append(data[i]);
-//            }
-//        }
-//    });
-//    console.log(FormData);
-//    return false;
-//});
+    //save selected salestatus for sale
+$('#save').on('click', function () {
+    var update = $('#salestatus > option:selected').html();
+    $.ajax({
+        type: "POST",
+        url: 'data.php',
+        data: {"update": update},
+        success: function (data) {
+           $('#result').html(data);       
+        }
+    });
+});
+
