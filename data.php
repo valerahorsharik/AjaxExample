@@ -12,6 +12,7 @@ if (!$db) {
 }
 //echo "\nPDO::errorInfo():\n";
 // print_r($db->errorInfo());
+header('Content-type:application/json');
 /*
  * check if request is Ajax
  */
@@ -127,7 +128,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
             $result = 'Something going wrong...';
         }
         $db = NULL;
-        echo $result;
+        echo json_encode($result);
     }
 }
 

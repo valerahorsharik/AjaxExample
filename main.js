@@ -6,7 +6,6 @@ $(document).ready(function () {
         data: {"changed": "cc_callcenters",
             "download": "cc_callcenters"},
         success: function (data) {
-            data = JSON.parse(data);
             for (var i in data) {
                 $('#cc_callcenters').append("<option value=\"" + i + "\">" + data[i] + "</option>\n");
             }
@@ -28,8 +27,8 @@ $('#list select').on('change', function () {
                 "changed_value": changed.value,
                 "download": download},
             success: function (data) {
-                 $("#" + download + " option").remove();
-                data = JSON.parse(data);
+                console.log(data);
+                $("#" + download + " option").remove();
                 $("#" + download).append("<option >Please select..</option>\n");
                 for (var i in data) {
                     $("#" + download).append("<option value=\"" + i + "\">" + data[i] + "</option>\n");
