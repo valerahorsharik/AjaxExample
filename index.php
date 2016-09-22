@@ -1,34 +1,6 @@
 <?php
-$host = "localhost";
-$dbname = "ajax_test";
-$user = "root";
-$pass = "";
-$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-if ($db) {
-    echo "all is ok";
-}
-$query_result = $db->query('SELECT cc_desks.* '
-        . 'FROM cc_desks '
-        . 'LEFT JOIN cc_callcenters '
-        . 'ON cc_desks.id_callcenter = cc_callcenters.id '
-        . 'WHERE cc_callcenters.id = 1');
-var_dump($query_result);
-if ($query_result) {
-    $results = array();
-    foreach ($query_result->fetchAll() as $row_number => $row) {
-        var_dump($row_number);
-        echo "<br/>";
-         var_dump($row);
-         echo "<hr/>";
-       // $results[] = $row['name'];
-    }
-
-    $db = NULL;
-    echo json_encode($results);
-} else {
-    echo "\nPDO::errorInfo():\n";
-    print_r($db->errorInfo());
-}
+error_reporting(-1) ; // включить все виды ошибок, включая  E_STRICT
+ini_set('display_errors', 'On');  // вывести на экран помимо логов
 ?>
 <html>
     <head>
@@ -61,9 +33,10 @@ if ($query_result) {
                     <option>Please select...</option>
                 </select>
             </div>
+            <button id="save">Save</button>
+            <div id="result"></div>
         </div>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script type="text/javascript" src="main.js"></script>
     </body>
 </html>
-
